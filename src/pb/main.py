@@ -9,10 +9,8 @@ def cli() -> None:
     parser = ArgumentParser(
         "PBite",
         description="""\
-PBite is a command line tool for parsing small bites of info from directories
-containing project metadata.
-
-`pbite .` will print some info about any project metadata in the current directory.
+PBite: `ls` for project metadata. Use `pb .` to parse metadata from the current
+directory.
 """,
     )
     parser.add_argument(
