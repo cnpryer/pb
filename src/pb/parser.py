@@ -46,16 +46,20 @@ class Content:
         data = toml_data(path)
         project = data.get("project", {})
         if "version" in project:
-            data["description"] = project.get("version")
+            data["version"] = project.get("version")
         if "description" in project:
             data["description"] = project.get("description")
         name = project.get("name", str(path))
         return Content(name, data, source=path)
 
     @property
+    def version(self) -> str:
+        return self.data.get("version", "could not parse version")
+
+    @property
     def description(self) -> str:
         return self.data.get("description", "could not parse description")
-
+    
     @property
     def source(self) -> Path:
         return self._source
@@ -65,6 +69,7 @@ class Content:
 Content
   Name: {self.name}
   Description: {self.description}
+  Version: {self.version}
   Source: {self.source}
 """
 
