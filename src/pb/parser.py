@@ -59,7 +59,7 @@ class Content:
     @property
     def description(self) -> str:
         return self.data.get("description", "could not parse description")
-    
+
     @property
     def source(self) -> Path:
         return self._source
