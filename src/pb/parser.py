@@ -1,6 +1,7 @@
 from __future__ import annotations
 from pathlib import Path
 from typing import Any, Iterable
+import rtoml  # type: ignore
 
 
 class PathParser:
@@ -14,33 +15,63 @@ class PathParser:
         return self._path
 
     def parse(self) -> Iterable[Content]:
-        if self.path.is_file() and is_metadata_file(self.path):
-            yield Content.file(self.path)
+        if self.path.is_file() and is_toml_file(self.path):
+            yield Content.toml(self.path)
         paths = self.path.glob("*.toml")  # TODO
         for path in paths:
-            yield Content.file(path)
-
-
-def is_metadata_file(path: Path) -> bool:
-    return path.suffix in (".toml",)
+            if is_toml_file(path):
+                yield Content.toml(path)
+            else:
+                yield Content.file(path)
 
 
 class Content:
     """Generic object for loading parsed contents into."""
 
-    def __init__(self, name: str, data: list[Any]) -> None:
+    def __init__(self, name: str, data: dict[str, Any], source: Path) -> None:
         self.name = name
         self._data = data
+        self._source = source
 
     @property
-    def data(self) -> list[Any]:
+    def data(self) -> dict[str, Any]:
         return self._data
 
     @staticmethod
     def file(path: Path) -> Content:
-        name = path
-        data: list[Any] = []  # TODO
-        return Content(str(name), data)  # TODO
+        return Content(str(path), {}, source=path)  # TODO
+
+    @staticmethod
+    def toml(path: Path) -> Content:
+        data = toml_data(path)
+        project = data.get("project", {})
+        if "version" in project:
+            data["description"] = project.get("version")
+        if "description" in project:
+            data["description"] = project.get("description")
+        name = project.get("name", str(path))
+        return Content(name, data, source=path)
+
+    @property
+    def description(self) -> str:
+        return self.data.get("description", "could not parse description")
+
+    @property
+    def source(self) -> Path:
+        return self._source
 
     def info(self) -> str:
-        return f"""Content Name: {self.name}"""
+        return f"""\
+Content
+  Name: {self.name}
+  Description: {self.description}
+  Source: {self.source}
+"""
+
+
+def toml_data(path: Path) -> dict[str, Any]:
+    return rtoml.load(path)
+
+
+def is_toml_file(path: Path) -> bool:
+    return path.suffix == ".toml"
