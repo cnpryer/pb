@@ -17,21 +17,17 @@ Content
 ## Installation
 
 ```
-pip install 'pb @ git+https://github.com/cnpryer/pb.git'
+pip install pbite
 ```
 
 You can add `pb` to any `venv` with
 ```
 python -m venv .venv
-./.venv/bin/pip install 'pb @ git+https://github.com/cnpryer/pb.git'
+./.venv/bin/pip install pbite
 ```
 
 It's recommended to install `pb` using a package manager like `rye`.
 ```
-rye install 'pb @ git+https://github.com/cnpryer/pb.git'
-```
-
-`pipx` will work as well.
-```
-pipx install 'pb @ git+https://github.com/cnpryer/pb.git'
+rye install pbite
+pb --version
 ```

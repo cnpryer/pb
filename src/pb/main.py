@@ -2,7 +2,7 @@ from __future__ import annotations
 from pathlib import Path
 from argparse import ArgumentParser
 from pb.parser import PathParser
-from pb import fmt_bite
+from pb import fmt_bite, __version__
 
 
 def cli() -> None:
@@ -22,6 +22,7 @@ directory.
     parser.add_argument(
         "-p", "--path", dest="path", help="Specify a path to process data from."
     )
+    parser.add_argument("--version", action="version", version=f"pb {__version__}")
     args = parser.parse_args()
 
     path = Path(args.path).resolve()
