@@ -1,5 +1,5 @@
 [project]
-name = "pb"
+name = "pbite"
 version = "0.1.0"
 description = "`ls` for project metadata"
 authors = [
