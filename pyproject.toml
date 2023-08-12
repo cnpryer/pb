@@ -1,7 +1,7 @@
 [project]
 name = "pb"
 version = "0.1.0"
-description = "Print content info bites"
+description = "`ls` for project metadata"
 authors = [
     { name = "Chris Pryer", email = "cnpryer@gmail.com" }
 ]
