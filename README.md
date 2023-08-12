@@ -1,4 +1,20 @@
-# pbite
+# PBite
+
+`ls` for project metadata.
+
+Use `pb` to display project metadata contents from your file system.
+
+```
+pb on  master is 📦 v0.1.0 via 🐍 v3.11.3 
+❯ pb .
+Content
+  Name: pb
+  Version: 0.1.0
+  Description: Print content info bites
+  Source: /Users/chrispryer/github/pb/pyproject.toml
+```
+
+## Installation
 
 ```
 pip install 'pb @ git+https://github.com/cnpryer/pb.git'
@@ -18,15 +34,4 @@ rye install 'pb @ git+https://github.com/cnpryer/pb.git'
 `pipx` will work as well.
 ```
 pipx install 'pb @ git+https://github.com/cnpryer/pb.git'
-```
-
-Use `pb` to display project metadata contents on your file system.
-```
-pb on  master is 📦 v0.1.0 via 🐍 v3.11.3 
-❯ pb .
-Content
-  Name: pb
-  Version: 0.1.0
-  Description: Print content info bites
-  Source: /Users/chrispryer/github/pb/pyproject.toml
 ```
