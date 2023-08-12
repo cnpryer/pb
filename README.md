@@ -1,23 +1,23 @@
 # pbite
 
 ```
-pip install 'pb @ git+ssh://git@github.com/cnpryer/pb.git'
+pip install 'pb @ git+https://github.com/cnpryer/pb.git'
 ```
 
 You can add `pb` to any `venv` with
 ```
 python -m venv .venv
-./.venv/bin/pip install 'pb @ git+ssh://git@github.com/cnpryer/pb.git'
+./.venv/bin/pip install 'pb @ git+https://github.com/cnpryer/pb.git'
 ```
 
-It's reccommended to install `pb` using a package manager like `rye`.
+It's recommended to install `pb` using a package manager like `rye`.
 ```
-rye install 'pb @ git+ssh://git@github.com/cnpryer/pb.git'
+rye install 'pb @ git+https://github.com/cnpryer/pb.git'
 ```
 
-`pipx` will work as well.\
+`pipx` will work as well.
 ```
-pipx install 'pb @ git+ssh://git@github.com/cnpryer/pb.git'
+pipx install 'pb @ git+https://github.com/cnpryer/pb.git'
 ```
 
 Use `pb` to display project metadata contents on your file system.
