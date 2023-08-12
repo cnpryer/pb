@@ -68,8 +68,8 @@ class Content:
         return f"""\
 Content
   Name: {self.name}
-  Description: {self.description}
   Version: {self.version}
+  Description: {self.description}
   Source: {self.source}
 """
 
