@@ -7,3 +7,4 @@
 #   all-features: false
 
 -e file:.
+rtoml==0.9.0

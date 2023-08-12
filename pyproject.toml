@@ -1,11 +1,13 @@
 [project]
 name = "pb"
 version = "0.1.0"
-description = "Bites of info about a project directory"
+description = "Print content info bites"
 authors = [
     { name = "Chris Pryer", email = "cnpryer@gmail.com" }
 ]
-dependencies = []
+dependencies = [
+    "rtoml>=0.9.0",
+]
 readme = "README.md"
 requires-python = ">= 3.8"
 
