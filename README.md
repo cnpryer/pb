@@ -10,7 +10,7 @@ pb on  master is 📦 v0.1.0 via 🐍 v3.11.3
 Content
   Name: pb
   Version: 0.1.0
-  Description: Print content info bites
+  Description: `ls` for project metadata
   Source: /Users/chrispryer/github/pb/pyproject.toml
 ```
 
