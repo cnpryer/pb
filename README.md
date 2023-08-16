@@ -7,9 +7,8 @@ Use `pb` to display project metadata contents from your file system.
 ```
 pb on  master is 📦 v0.1.0 via 🐍 v3.11.3 
 ❯ pb .
-Content
   Name: pb
-  Version: 0.1.0
+  Version: 0.0.3
   Description: `ls` for project metadata
   Source: /Users/chrispryer/github/pb/pyproject.toml
 ```
