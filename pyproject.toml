@@ -1,6 +1,6 @@
 [project]
 name = "pbite"
-version = "0.0.1"
+version = "0.0.2"
 description = "`ls` for project metadata"
 authors = [
     { name = "Chris Pryer", email = "cnpryer@gmail.com" }

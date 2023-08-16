@@ -1,6 +1,6 @@
 from pbite.parser import Content
 
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 
 
 def fmt_bite(content: Content) -> str:
