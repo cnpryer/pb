@@ -12,7 +12,7 @@ readme = "README.md"
 requires-python = ">= 3.8"
 
 [project.scripts]
-pb = "pb.main:cli"
+pb = "pbite.main:cli"
 
 [build-system]
 requires = ["hatchling"]

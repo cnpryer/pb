@@ -1,4 +1,4 @@
-from pb.parser import Content
+from pbite.parser import Content
 
 __version__ = "0.0.1"
 
