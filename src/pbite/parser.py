@@ -16,13 +16,15 @@ class PathParser:
 
     def parse(self) -> Iterable[Content]:
         if self.path.is_file() and is_toml_file(self.path):
-            yield Content.toml(self.path)
-        paths = self.path.glob("*.toml")  # TODO
+            return [Content.toml(self.path)]
+        paths = self.path.glob("*.toml")  # TODO(cnpryer)
+        deduper = ContentDeduper()
         for path in paths:
-            if is_toml_file(path):
-                yield Content.toml(path)
-            else:
-                yield Content.file(path)
+            # Currently .toml is only supported
+            if not is_toml_file(path):
+                continue
+            deduper.add(Content.toml(path))
+        return deduper.dedupe()
 
 
 class Content:
@@ -32,10 +34,14 @@ class Content:
         self.name = name
         self._data = data
         self._source = source
+        self._hash = content_hash(self)  # TODO(cnpryer)
 
     @property
     def data(self) -> dict[str, Any]:
         return self._data
+
+    def contains(self, key: str) -> bool:
+        return key in self.data
 
     @staticmethod
     def file(path: Path) -> Content:
@@ -45,12 +51,15 @@ class Content:
     def toml(path: Path) -> Content:
         data = toml_data(path)
         project = data.get("project", {})
+        if "name" in project:
+            data["name"] = project["name"]
         if "version" in project:
-            data["version"] = project.get("version")
+            data["version"] = project["version"]
         if "description" in project:
-            data["description"] = project.get("description")
-        name = project.get("name", str(path))
-        return Content(name, data, source=path)
+            data["description"] = project["description"]
+        data["name"] = data.get("name", project.get("name", str(path)))
+        data["source"] = path
+        return Content(data["name"], data, source=data["source"])
 
     @property
     def version(self) -> str:
@@ -66,7 +75,6 @@ class Content:
 
     def info(self) -> str:
         return f"""\
-Content
   Name: {self.name}
   Version: {self.version}
   Description: {self.description}
@@ -80,3 +88,45 @@ def toml_data(path: Path) -> dict[str, Any]:
 
 def is_toml_file(path: Path) -> bool:
     return path.suffix == ".toml"
+
+
+class ContentDeduper:
+    def __init__(self) -> None:
+        self._hashes: list[str] = []
+        self._content: list[Content] = []
+
+    def add(self, content: Content) -> None:
+        self._content.append(content)
+
+    def contains(self, content: Content) -> bool:
+        return content._hash in self._hashes
+
+    def dedupe(self) -> list[Content]:
+        d = {}
+        for ct in self._content:
+            if ct._hash not in d:
+                d[ct._hash] = ct.data
+                continue
+            merge_data(d[ct._hash], ct.data)
+        return [Content(d[h]["name"], d[h], d[h]["source"]) for h in d]
+
+
+def merge_data(a: dict[str, Any], b: dict[str, Any]) -> None:
+    if a["name"] == str(a["source"]) and "name" in b:
+        a["name"] = b["name"]
+    if "version" not in a and "version" in b:
+        a["version"] = b["version"]
+    if "description" not in a and "description" in b:
+        a["description"] = b["description"]
+
+
+# TODO(cnpryer): __hash__ for hash(content)
+def content_hash(content: Content) -> str:
+    name = content.name
+    if name == str(content.source):
+        name = content.source.parent.stem  # TODO(cnrpyer): Could index by dir path
+    return normalize_name(name)
+
+
+def normalize_name(name: str) -> str:
+    return name.strip().lower()
