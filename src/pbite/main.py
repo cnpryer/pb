@@ -1,8 +1,8 @@
 from __future__ import annotations
 from pathlib import Path
 from argparse import ArgumentParser
-from pb.parser import PathParser
-from pb import fmt_bite, __version__
+from pbite.parser import PathParser
+from pbite import fmt_bite, __version__
 
 
 def cli() -> None:
